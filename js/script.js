@@ -256,7 +256,8 @@
         autoHeight: !0,
         autoplay: !0,
         autoplayTimeout: 1e4,
-        navText: ['<span class="fa fa-chevron-left"></span>', '<span class="fa fa-chevron-right"></span>'],
+        autoplayHoverPause: !0,
+        navText: ['<span class="owl-nav-icon">&#8249;</span>', '<span class="owl-nav-icon">&#8250;</span>'],
         responsive: {
             0: {
                 items: 1
@@ -267,6 +268,21 @@
             1024: {
                 items: 1
             }
+        },
+        onInitialized: function(event){
+            var $el = a(event.target);
+            if(!$el.find('.owl-counter').length){
+                var total = event.item && event.item.count ? event.item.count : $el.find('.owl-item').length;
+                var current = (event.item && event.item.index !== undefined) ? (event.item.index + 1) : 1;
+                var $counter = a('<div class="owl-counter" />').text(current + ' / ' + total);
+                $el.append($counter);
+            }
+        },
+        onChanged: function(event){
+            var $el = a(event.target);
+            var total = event.item && event.item.count ? event.item.count : $el.find('.owl-item').length;
+            var current = (event.item && event.item.index !== undefined) ? (event.item.index + 1) : 1;
+            $el.find('.owl-counter').text(current + ' / ' + total);
         }
     }),
     a(".sponsors-carousel").length && a(".sponsors-carousel").owlCarousel({
